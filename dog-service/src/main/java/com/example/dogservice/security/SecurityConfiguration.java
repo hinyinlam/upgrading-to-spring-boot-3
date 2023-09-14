@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.util.StringUtils;
 
 /**
@@ -24,7 +25,7 @@ public class SecurityConfiguration {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests((requests) -> {
-			requests.requestMatchers("/dogs").permitAll();
+			requests.requestMatchers(new AntPathRequestMatcher("/dogs")).permitAll();
 			requests.requestMatchers(EndpointRequest.toAnyEndpoint()).hasAnyRole("admin");
 			requests.anyRequest().authenticated();
 		});
